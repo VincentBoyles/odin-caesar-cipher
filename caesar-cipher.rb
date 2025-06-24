@@ -14,8 +14,9 @@ def caesar_cipher(string, key)
       encrypted.push(alphabets[index].upcase) 
     end
   end
+    encrypted.push(letter) if !letter.match(/\A[a-zA-Z0-9]*\z/)
   end
-  puts encrypted
+  return encrypted.join("")
 end
 
-caesar_cipher("What a string!", 5)
+
