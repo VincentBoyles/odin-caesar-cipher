@@ -1,22 +1,19 @@
 def caesar_cipher(string, key)
-  alphabets = ('a'..'z').to_a
-  string = string.split("")
+  alphabets = 'abcdefghijklmnopqstuvwxyz'
   encrypted =[]
 
-  string.each do
-    |letter|
-  alphabets.each_with_index do
-    |value, index|
-    index = (index + key + alphabets.length) % alphabets.length
-    if value == letter
-      encrypted.push(alphabets[index])
-    elsif value.upcase == letter
-      encrypted.push(alphabets[index].upcase) 
+  string.each_char do |letter|
+    if alphabets.include?(letter)
+      index = alphabets.index(letter)
+      move = (index + key) % alphabets.length
+      encrypted << alphabets[move]
+    elsif alphabets.include?(letter.downcase)
+      index = alphabets.index(letter.downcase)
+      move = (index + key) % alphabets.length
+      encrypted << alphabets[move].upcase
+    else
+      encrypted << letter
     end
-  end
-    encrypted.push(letter) if !letter.match(/\A[a-zA-Z0-9]*\z/)
-  end
+  end  
   return encrypted.join("")
 end
-
-
