@@ -1,31 +1,24 @@
 # Caesar Cipher (Ruby)
 
-This is a simple Ruby implementation of the classic **Caesar Cipher** encryption algorithm. The Caesar Cipher is a type of substitution cipher in which each letter in the plaintext is shifted a certain number of places down or up the alphabet.
+This is a simple implementation of the **Caesar Cipher**, a basic encryption technique where each letter in a string is shifted by a specified number of positions in the alphabet.
+
+---
 
 ## 🔐 How It Works
 
-- Accepts a `string` and a `key` (number of positions to shift).
-- Shifts **alphabetic** characters (both uppercase and lowercase) by the key.
-- Leaves **non-alphabetic** characters (e.g. spaces, punctuation) unchanged.
-- Wraps around the alphabet using modular arithmetic.
+- Accepts a `string` (text to encrypt) and a `key` (number of positions to shift).
+- Shifts both lowercase and uppercase alphabetic characters while preserving case.
+- Leaves non-letter characters (spaces, punctuation, numbers) unchanged.
+- Wraps around the alphabet using modular arithmetic to keep characters in bounds.
 
 ---
 
-## 🧪 Example
+## 📎 Example
 
 ```ruby
-caesar_cipher("What a string!", 5)
-# => "Bmfy f xywnsl!"
+caesar_cipher("Hello, World!", 3)
+# => "Khoor, Zruog!"
 ```
-
----
-
-## 🧠 Core Logic
-
-- Uses Ruby ranges to build an array of the alphabet.
-- Loops through each character in the string.
-- Applies Caesar shift to matching letters.
-- Keeps non-letter characters unchanged using a simple regex check.
 
 ---
 
@@ -33,49 +26,62 @@ caesar_cipher("What a string!", 5)
 
 ```ruby
 def caesar_cipher(string, key)
-  alphabets = ('a'..'z').to_a
-  string = string.split("")
-  encrypted = []
+  alphabets = 'abcdefghijklmnopqrstuvwxyz'
+  encrypted =[]
 
-  string.each do |letter|
-    alphabets.each_with_index do |value, index|
-      index = (index + key + alphabets.length) % alphabets.length
-      if value == letter
-        encrypted.push(alphabets[index])
-      elsif value.upcase == letter
-        encrypted.push(alphabets[index].upcase) 
-      end
+  string.each_char do |letter|
+    if alphabets.include?(letter)
+      index = alphabets.index(letter)
+      move = (index + key) % alphabets.length
+      encrypted << alphabets[move]
+    elsif alphabets.include?(letter.downcase)
+      index = alphabets.index(letter.downcase)
+      move = (index + key) % alphabets.length
+      encrypted << alphabets[move].upcase
+    else
+      encrypted << letter
     end
-    encrypted.push(letter) if !letter.match(/\A[a-zA-Z0-9]*\z/)
-  end
+  end  
   return encrypted.join("")
 end
 ```
 
 ---
 
-## 💡 Notes
+## 🧠 Concepts Used
 
-- This implementation uses a regular expression to detect non-alphabetic characters.
-- The logic can be optimized further, but this version prioritizes readability and step-by-step learning.
+- String iteration with `.each_char`
+- Indexing and shifting with `.index` and modulo
+- Case sensitivity handling
+- Simple array-based cipher logic
+
+---
+
+## 💡 Educational Purpose
+
+This project is great for beginners learning:
+- Ruby basics
+- Control flow
+- String manipulation
+- Intro to classical encryption methods
 
 ---
 
 ## 📚 Learn More
 
-- [Caesar Cipher on Wikipedia](https://en.wikipedia.org/wiki/Caesar_cipher)
-- [Ruby `.each_with_index`](https://ruby-doc.org/core-3.1.0/Enumerable.html#method-i-each_with_index)
-- [Modulus operator in Ruby](https://ruby-doc.org/core-3.1.0/Integer.html#method-i-25)
+- [Caesar Cipher - Wikipedia](https://en.wikipedia.org/wiki/Caesar_cipher)
+- [Ruby String Methods](https://ruby-doc.org/core/String.html)
+- [Modulus Operator](https://ruby-doc.org/core/Integer.html#method-i-25)
 
 ---
 
 ## 📄 License
 
-This project is provided **for educational purposes only**.
+This project is licensed **for educational purposes only**.
 
-You are free to use, modify, and share this code in learning environments, personal projects, or classroom settings.  
-Commercial use, redistribution without attribution, or inclusion in proprietary software is **not permitted**.
+You are free to use, modify, and share this code for learning, academic, and personal projects.  
+**Commercial use and redistribution without attribution are not permitted.**
 
 ---
 
-Created with ❤️ to practice Ruby basics and classic ciphers.
+Made with ❤️ while learning Ruby and classic cryptography.
