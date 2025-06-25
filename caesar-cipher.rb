@@ -1,5 +1,5 @@
 def caesar_cipher(string, key)
-  alphabets = 'abcdefghijklmnopqstuvwxyz'
+  alphabets = 'abcdefghijklmnopqrstuvwxyz'
   encrypted =[]
 
   string.each_char do |letter|
